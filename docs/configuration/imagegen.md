@@ -38,7 +38,7 @@ Further optional configuration:
 
 ## Stable Diffusion WebUI
 
-It is possible to use your own self-hosted Stable Diffusion WebUI with Auto-GPT:
+It is possible to use your own self-hosted Stable Diffusion WebUI with alpha:
 ``` ini
 IMAGE_PROVIDER=sdwebui
 ```

@@ -1,8 +1,8 @@
-# Setting up Auto-GPT
+# Setting up alpha
 
 ## 📋 Requirements
 
-Choose an environment to run Auto-GPT in (pick one):
+Choose an environment to run alpha in (pick one):
 
   - [Docker](https://docs.docker.com/get-docker/) (*recommended*)
   - Python 3.10 or later (instructions: [for Windows](https://www.tutorialspoint.com/how-to-install-python-in-windows))
@@ -14,7 +14,7 @@ Choose an environment to run Auto-GPT in (pick one):
 Get your OpenAI API key from: [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys).
 
 !!! attention
-    To use the OpenAI API with Auto-GPT, we strongly recommend **setting up billing**
+    To use the OpenAI API with alpha, we strongly recommend **setting up billing**
     (AKA paid account). Free accounts are [limited][openai/api limits] to 3 API calls per
     minute, which can cause the application to crash.
 
@@ -29,31 +29,30 @@ Get your OpenAI API key from: [https://platform.openai.com/account/api-keys](htt
 ![For OpenAI API key to work, set up paid account at OpenAI API > Billing](./imgs/openai-api-key-billing-paid-account.png)
 
 
-## Setting up Auto-GPT
+## Setting up alpha
 
 ### Set up with Docker
 
 1. Make sure you have Docker installed, see [requirements](#requirements)
-2. Create a project directory for Auto-GPT
+2. Create a project directory for alpha
 
         :::shell
-        mkdir Auto-GPT
-        cd Auto-GPT
+        mkdir alpha
+        cd alpha
 
 3. In the project directory, create a file called `docker-compose.yml` with the following contents:
 
         :::yaml
         version: "3.9"
         services:
-          auto-gpt:
-            image: significantgravitas/auto-gpt
-            env_file:
+          alpha:
+            image: significantgravitas/alpha            env_file:
               - .env
             profiles: ["exclude-from-up"]
             volumes:
-              - ./auto_gpt_workspace:/app/autogpt/auto_gpt_workspace
+              - ./alpha_workspace:/app/alpha/alpha_workspace
               - ./data:/app/data
-              ## allow auto-gpt to write logs to disk
+              ## allow alpha to write logs to disk
               - ./logs:/app/logs
               ## uncomment following lines if you want to make use of these files
               ## you must have them existing in the same folder as this docker-compose.yml
@@ -69,16 +68,14 @@ Get your OpenAI API key from: [https://platform.openai.com/account/api-keys](htt
 5. Pull the latest image from [Docker Hub]
 
         :::shell
-        docker pull significantgravitas/auto-gpt
-
+        docker pull significantgravitas/alpha
 6. Continue to [Run with Docker](#run-with-docker)
 
 !!! note "Docker only supports headless browsing"
-    Auto-GPT uses a browser in headless mode by default: `HEADLESS_BROWSER=True`.
-    Please do not change this setting in combination with Docker, or Auto-GPT will crash.
+    alpha uses a browser in headless mode by default: `HEADLESS_BROWSER=True`.
+    Please do not change this setting in combination with Docker, or alpha will crash.
 
-[Docker Hub]: https://hub.docker.com/r/significantgravitas/auto-gpt
-[repository]: https://github.com/Significant-Gravitas/Auto-GPT
+[Docker Hub]: https://hub.docker.com/r/significantgravitas/alpha[repository]: https://github.com/coozila/alpha
 
 
 ### Set up with Git
@@ -93,12 +90,12 @@ Get your OpenAI API key from: [https://platform.openai.com/account/api-keys](htt
 1. Clone the repository
 
         :::shell
-        git clone -b stable https://github.com/Significant-Gravitas/Auto-GPT.git
+        git clone -b stable https://github.com/coozila/alpha.git
 
 2. Navigate to the directory where you downloaded the repository
 
         :::shell
-        cd Auto-GPT
+        cd alpha
 
 
 ### Set up without Git/Docker
@@ -106,13 +103,13 @@ Get your OpenAI API key from: [https://platform.openai.com/account/api-keys](htt
 !!! warning
     We recommend to use Git or Docker, to make updating easier. Also note that some features such as Python execution will only work inside docker for security reasons.
 
-1. Download `Source code (zip)` from the [latest stable release](https://github.com/Significant-Gravitas/Auto-GPT/releases/latest)
+1. Download `Source code (zip)` from the [latest stable release](https://github.com/coozila/alpha/releases/latest)
 2. Extract the zip-file into a folder
 
 
 ### Configuration
 
-1. Find the file named `.env.template` in the main `Auto-GPT` folder. This file may
+1. Find the file named `.env.template` in the main `alpha` folder. This file may
     be hidden by default in some operating systems due to the dot prefix. To reveal
     hidden files, follow the instructions for your specific operating system:
     [Windows][show hidden files/Windows], [macOS][show hidden files/macOS].
@@ -143,7 +140,7 @@ Get your OpenAI API key from: [https://platform.openai.com/account/api-keys](htt
         # Please specify all of these values as double-quoted strings
         # Replace string in angled brackets (<>) to your own deployment Name
         azure_model_map:
-            fast_llm_model_deployment_id: "<auto-gpt-deployment>"
+            fast_llm_model_deployment_id: "<alpha-deployment>"
                 ...
 
     Details can be found in the [openai-python docs], and in the [Azure OpenAI docs] for the embedding model.
@@ -155,7 +152,7 @@ Get your OpenAI API key from: [https://platform.openai.com/account/api-keys](htt
 [Azure OpenAI docs]: https://learn.microsoft.com/en-us/azure/cognitive-services/openai/tutorials/embeddings?tabs=command-line
 
 
-## Running Auto-GPT
+## Running alpha
 
 ### Run with Docker
 
@@ -170,18 +167,16 @@ This will display the version of Docker Compose that is currently installed on y
 
 If you need to upgrade Docker Compose to a newer version, you can follow the installation instructions in the Docker documentation: https://docs.docker.com/compose/install/
 
-Once you have a recent version of docker-compose, run the commands below in your Auto-GPT folder.
+Once you have a recent version of docker-compose, run the commands below in your alpha folder.
 
 1. Build the image. If you have pulled the image from Docker Hub, skip this step (NOTE: You *will* need to do this if you are modifying requirements.txt to add/remove depedencies like Python libs/frameworks) 
 
         :::shell
-        docker-compose build auto-gpt
-
-2. Run Auto-GPT
+        docker-compose build alpha
+2. Run alpha
 
         :::shell
-        docker-compose run --rm auto-gpt
-
+        docker-compose run --rm alpha
     By default, this will also start and attach a Redis memory backend. If you do not
     want this, comment or remove the `depends: - redis` and `redis:` sections from
     `docker-compose.yml`.
@@ -190,17 +185,16 @@ Once you have a recent version of docker-compose, run the commands below in your
 
 You can pass extra arguments, e.g. running with `--gpt3only` and `--continuous`:
 ``` shell
-docker-compose run --rm auto-gpt --gpt3only --continuous
+docker-compose run --rm alpha --gpt3only --continuous
 ```
 
 If you dare, you can also build and run it with "vanilla" docker commands:
 ``` shell
-docker build -t auto-gpt .
-docker run -it --env-file=.env -v $PWD:/app auto-gpt
-docker run -it --env-file=.env -v $PWD:/app --rm auto-gpt --gpt3only --continuous
+docker build -t alpha .
+docker run -it --env-file=.env -v $PWD:/app alphadocker run -it --env-file=.env -v $PWD:/app --rm alpha --gpt3only --continuous
 ```
 
-[docker-compose file]: https://github.com/Significant-Gravitas/Auto-GPT/blob/stable/docker-compose.yml
+[docker-compose file]: https://github.com/coozila/alpha/blob/stable/docker-compose.yml
 
 
 ### Run with Dev Container
@@ -219,8 +213,8 @@ docker run -it --env-file=.env -v $PWD:/app --rm auto-gpt --gpt3only --continuou
 Create a virtual environment to run in.
 
 ``` shell
-python -m venv venvAutoGPT
-source venvAutoGPT/bin/activate
+python -m venv venvAlpha
+source venvAlpha/bin/activate
 pip3 install --upgrade pip
 ```
 
@@ -228,7 +222,7 @@ pip3 install --upgrade pip
     Due to security reasons, certain features (like Python execution) will by default be disabled when running without docker. So, even if you want to run the program outside a docker container, you currently still need docker to actually run scripts.
 
 Simply run the startup script in your terminal. This will install any necessary Python
-packages and launch Auto-GPT.
+packages and launch alpha.
 
 - On Linux/MacOS:
 

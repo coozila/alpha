@@ -26,7 +26,7 @@ python -m pytest
 - To run tests and see coverage:
 
         :::shell
-        pytest --cov=autogpt --without-integration --without-slow-integration
+        pytest --cov=alpha --without-integration --without-slow-integration
 
 ## Running the linter
 

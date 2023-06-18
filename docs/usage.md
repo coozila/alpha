@@ -11,22 +11,22 @@ Running with `--help` lists all the possible command line arguments you can pass
 
 !!! info
     For use with Docker, replace the script in the examples with
-    `docker-compose run --rm auto-gpt`:
+    `docker-compose run --rm alpha`:
 
         :::shell
-        docker-compose run --rm auto-gpt --help
-        docker-compose run --rm auto-gpt --ai-settings <filename>
+        docker-compose run --rm alpha --help
+        docker-compose run --rm alpha --ai-settings <filename>
 
 !!! note
     Replace anything in angled brackets (<>) to a value you want to specify
 
-Here are some common arguments you can use when running Auto-GPT:
+Here are some common arguments you can use when running alpha:
 
-* Run Auto-GPT with a different AI Settings file
+* Run alpha with a different AI Settings file
     ``` shell
     ./run.sh --ai-settings <filename>
     ```
-* Run Auto-GPT with a different Prompt Settings file
+* Run alpha with a different Prompt Settings file
     ``` shell
     ./run.sh --prompt-settings <filename>
     ```
@@ -42,7 +42,7 @@ Here are some common arguments you can use when running Auto-GPT:
 
 ### Speak Mode
 
-Enter this command to use TTS _(Text-to-Speech)_ for Auto-GPT
+Enter this command to use TTS _(Text-to-Speech)_ for alpha
 
 ``` shell
 ./run.sh --speak
@@ -66,7 +66,7 @@ Running Self-Feedback will **INCREASE** token use and thus cost more. This featu
 
 ### GPT-3.5 ONLY Mode
 
-If you don't have access to GPT-4, this mode allows you to use Auto-GPT!
+If you don't have access to GPT-4, this mode allows you to use alpha!
 
 ``` shell
 ./run.sh --gpt3only
@@ -76,7 +76,7 @@ You can achieve the same by setting `SMART_LLM_MODEL` in `.env` to `gpt-3.5-turb
 
 ### GPT-4 ONLY Mode
 
-If you have access to GPT-4, this mode allows you to use Auto-GPT solely with GPT-4.
+If you have access to GPT-4, this mode allows you to use alpha solely with GPT-4.
 This may give your bot increased intelligence.
 
 ``` shell
@@ -84,7 +84,7 @@ This may give your bot increased intelligence.
 ```
 
 !!! warning
-    Since GPT-4 is more expensive to use, running Auto-GPT in GPT-4-only mode will
+    Since GPT-4 is more expensive to use, running alpha in GPT-4-only mode will
     increase your API costs.
 
 ## Logs
@@ -104,5 +104,5 @@ If you want to selectively disable some command groups, you can use the `DISABLE
 For example, to disable coding related features, set it to the value below:
 
 ```ini
-DISABLED_COMMAND_CATEGORIES=autogpt.commands.analyze_code,autogpt.commands.execute_code,autogpt.commands.git_operations,autogpt.commands.improve_code,autogpt.commands.write_tests
+DISABLED_COMMAND_CATEGORIES=alpha.commands.analyze_code,alpha.commands.execute_code,alpha.commands.git_operations,alpha.commands.improve_code,alpha.commands.write_tests
 ```

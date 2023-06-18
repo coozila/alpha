@@ -2,11 +2,11 @@
     The Pinecone, Milvus and Weaviate memory backends were rendered incompatible
     by work on the memory system, and have been removed in `master`.
     Whether support will be added back in the future is subject to discussion,
-    feel free to pitch in: https://github.com/Significant-Gravitas/Auto-GPT/discussions/4280
+    feel free to pitch in: https://github.com/coozila/alpha/discussions/4280
 
 ## Setting Your Cache Type
 
-By default, Auto-GPT set up with Docker Compose will use Redis as its memory backend.
+By default, alpha set up with Docker Compose will use Redis as its memory backend.
 Otherwise, the default is LocalCache (which stores memory in a JSON file).
 
 To switch to a different backend, change the `MEMORY_BACKEND` in `.env`
@@ -30,7 +30,7 @@ Links to memory backends
 ### Redis Setup
 
 !!! important
-    If you have set up Auto-GPT using Docker Compose, then Redis is included, no further
+    If you have set up alpha using Docker Compose, then Redis is included, no further
     setup needed.
 
 !!! caution
@@ -56,7 +56,7 @@ Links to memory backends
 
     - `WIPE_REDIS_ON_START=False` to persist memory stored in Redis between runs.
     - `MEMORY_INDEX=<WHATEVER>` to specify a name for the memory index in Redis.
-        The default is `auto-gpt`.
+        The default is `alpha`.
 
 !!! info
     See [redis-stack-server](https://hub.docker.com/r/redis/redis-stack-server) for
@@ -112,7 +112,7 @@ deployed with docker, or as a cloud service provided by [Zilliz Cloud](https://z
         Only use if your Milvus instance has TLS enabled.
         *Note: setting `MILVUS_ADDR` to a `https://` URL will override this setting.*
     - `MILVUS_COLLECTION` to change the collection name to use in Milvus.
-        Defaults to `autogpt`.
+        Defaults to `alpha`.
 
 ### Weaviate Setup
 [Weaviate](https://weaviate.io/) is an open-source vector database. It allows to store
@@ -120,7 +120,7 @@ data objects and vector embeddings from ML-models and scales seamlessly to billi
 data objects. To set up a Weaviate database, check out their [Quickstart Tutorial](https://weaviate.io/developers/weaviate/quickstart).
 
 Although still experimental, [Embedded Weaviate](https://weaviate.io/developers/weaviate/installation/embedded)
-is supported which allows the Auto-GPT process itself to start a Weaviate instance.
+is supported which allows the alpha process itself to start a Weaviate instance.
 To enable it, set `USE_WEAVIATE_EMBEDDED` to `True` and make sure you `pip install "weaviate-client>=3.15.4"`.
 
 #### Install the Weaviate client
@@ -145,7 +145,7 @@ WEAVIATE_PASSWORD="your password"
 WEAVIATE_API_KEY="your weaviate API key if you have one"
 WEAVIATE_EMBEDDED_PATH="/home/me/.local/share/weaviate" # this is optional and indicates where the data should be persisted when running an embedded instance
 USE_WEAVIATE_EMBEDDED=False # set to True to run Embedded Weaviate
-MEMORY_INDEX="Autogpt" # name of the index to create for the application
+MEMORY_INDEX="alpha" # name of the index to create for the application
 ```
 
 ## View Memory Usage
@@ -154,7 +154,7 @@ View memory usage by using the `--debug` flag :)
 
 
 ## 🧠 Memory pre-seeding
-Memory pre-seeding allows you to ingest files into memory and pre-seed it before running Auto-GPT.
+Memory pre-seeding allows you to ingest files into memory and pre-seed it before running alpha.
 
 ``` shell
 $ python data_ingestion.py -h 
@@ -173,11 +173,11 @@ options:
 # python data_ingestion.py --dir DataFolder --init --overlap 100 --max_length 2000
 ```
 
-In the example above, the script initializes the memory, ingests all files within the `Auto-Gpt/autogpt/auto_gpt_workspace/DataFolder` directory into memory with an overlap between chunks of 100 and a maximum length of each chunk of 2000.
+In the example above, the script initializes the memory, ingests all files within the `alpha/alpha/alpha_workspace/DataFolder` directory into memory with an overlap between chunks of 100 and a maximum length of each chunk of 2000.
 
-Note that you can also use the `--file` argument to ingest a single file into memory and that data_ingestion.py will only ingest files within the `/auto_gpt_workspace` directory.
+Note that you can also use the `--file` argument to ingest a single file into memory and that data_ingestion.py will only ingest files within the `/alpha_workspace` directory.
 
-The DIR path is relative to the auto_gpt_workspace directory, so `python data_ingestion.py --dir . --init` will ingest everything in `auto_gpt_workspace` directory.
+The DIR path is relative to the alpha_workspace directory, so `python data_ingestion.py --dir . --init` will ingest everything in `alpha_workspace` directory.
 
 You can adjust the `max_length` and `overlap` parameters to fine-tune the way the
     documents are presented to the AI when it "recall" that memory:
@@ -197,14 +197,14 @@ Memory pre-seeding is a technique for improving AI accuracy by ingesting relevan
 into its memory. Chunks of data are split and added to memory, allowing the AI to access
 them quickly and generate more accurate responses. It's useful for large datasets or when
 specific information needs to be accessed quickly. Examples include ingesting API or
-GitHub documentation before running Auto-GPT.
+GitHub documentation before running alpha.
 
 !!! attention
-    If you use Redis for memory, make sure to run Auto-GPT with `WIPE_REDIS_ON_START=False`
+    If you use Redis for memory, make sure to run alpha with `WIPE_REDIS_ON_START=False`
 
     For other memory backends, we currently forcefully wipe the memory when starting
-    Auto-GPT. To ingest data with those memory backends, you can call the
-    `data_ingestion.py` script anytime during an Auto-GPT run.
+    alpha. To ingest data with those memory backends, you can call the
+    `data_ingestion.py` script anytime during an alpha run.
 
 Memories will be available to the AI immediately as they are ingested, even if ingested
-while Auto-GPT is running.
+while alpha is running.

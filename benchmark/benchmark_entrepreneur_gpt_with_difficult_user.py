@@ -75,7 +75,7 @@ Needs improvement.
 Not what I need."""
     # TODO: add questions above, to distract it even more.
 
-    command = [sys.executable, "-m", "autogpt"]
+    command = [sys.executable, "-m", "alpha"]
 
     process = subprocess.Popen(
         command,
